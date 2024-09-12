@@ -18,13 +18,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+
 public class AuthController {
     
     @Autowired
@@ -73,21 +71,42 @@ public class AuthController {
         return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
     }
 
+//    @PostMapping("/signin")
+//    public  ResponseEntity<AuthResponse> signin(@RequestBody User user){
+//        String username = user.getEmail();
+//        String password = user.getPassword();
+//
+//        Authentication authentication = authenticate(username,password);
+//
+//        String token = jwtProvider.generateToken(authentication);
+//
+//        AuthResponse authResponse = new AuthResponse(token,true);
+//
+//        return new ResponseEntity<AuthResponse>(authResponse,HttpStatus.ACCEPTED);
+//
+//
+//    }
+
     @PostMapping("/signin")
-    public  ResponseEntity<AuthResponse> signin(@RequestBody User user){
-        String username = user.getEmail();
-        String password = user.getPassword();
+    public ResponseEntity<AuthResponse> signin(@RequestBody User user){
+        System.out.println("Received signin request with: " + user);
+        try {
+            String username = user.getEmail();
+            String password = user.getPassword();
 
-        Authentication authentication = authenticate(username,password);
+            Authentication authentication = authenticate(username, password);
 
-        String token = jwtProvider.generateToken(authentication);
+            String token = jwtProvider.generateToken(authentication);
 
-        AuthResponse authResponse = new AuthResponse(token,true);
+            AuthResponse authResponse = new AuthResponse(token, true);
 
-        return new ResponseEntity<AuthResponse>(authResponse,HttpStatus.ACCEPTED);
-
-
+            return new ResponseEntity<>(authResponse, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            System.out.println("Error during signin: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
+
 
     private Authentication authenticate(String username, String password) {
 
