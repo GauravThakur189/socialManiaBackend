@@ -98,7 +98,7 @@ public class TwitServiceImplementation implements  TwitService{
 
     @Override
     public List<Twit> getUserTwit(User user) {
-        return twitRepository.findByRetwitUserContainsOrUser_IdAndIsTwitTrueOrderByCreatedAtDesc(user,user.getId());
+        return twitRepository.findByRetwitUserContainingOrUser_IdAndIsTwitTrueOrderByCreatedAtDesc(user,user.getId());
     }
 
     @Override

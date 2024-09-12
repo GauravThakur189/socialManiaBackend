@@ -24,6 +24,9 @@ public class UserController {
     @GetMapping("/profile")
     public ResponseEntity<UserDto> getUserProfile(@RequestHeader("Authorization") String jwt)
             throws UserException{
+//        if (jwt.startsWith("Bearer ")) {
+//            jwt = jwt.substring(7); // Remove "Bearer " to get the actual token
+//        }
         User user = userService.findUserProfileByJwt(jwt);
 
         UserDto userDto = UserDtoMapper.toUserDto(user);

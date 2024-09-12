@@ -8,9 +8,11 @@ import com.springmaniya.springmaniya.model.User;
 import com.springmaniya.springmaniya.repository.LikeRepository;
 import com.springmaniya.springmaniya.repository.TwitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class LikeServiceImplementation implements  LikeService{
 
     @Autowired

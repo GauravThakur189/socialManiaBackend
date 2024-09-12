@@ -11,9 +11,9 @@ public interface TwitRepository extends JpaRepository<Twit,Long> {
 
     List<Twit> findAllByIsTwitTrueOrderByCreatedAtDesc();
 
-    List<Twit> findByRetwitUserContainsOrUser_IdAndIsTwitTrueOrderByCreatedAtDesc(User user,Long userId);
+    List<Twit> findByRetwitUserContainingOrUser_IdAndIsTwitTrueOrderByCreatedAtDesc(User user,Long userId);
 
-    List<Twit> findByLikesContaingOrderByCreatedAtDesc(User user);
+    List<Twit> findByLikesContainingOrderByCreatedAtDesc(User user);
 
     @Query("Select t From Twit t JOIN t.likes l where l.user.id=:userId")
     List<Twit> findByLikesUser_id(Long userId);

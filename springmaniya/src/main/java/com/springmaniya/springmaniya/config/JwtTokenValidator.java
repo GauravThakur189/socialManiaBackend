@@ -6,6 +6,7 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,6 +23,8 @@ import java.util.List;
 public class JwtTokenValidator extends OncePerRequestFilter {
 
 
+//    @Autowired
+//    Authentication authentication;
     @Override
     // This class extends OncePerRequestFilter and handles JWT token processing
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -54,7 +57,7 @@ public class JwtTokenValidator extends OncePerRequestFilter {
                 List<GrantedAuthority> auths = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
 
                 // Create an Authentication object with the user's email and authorities
-                Authentication authentication = new UsernamePasswordAuthenticationToken(email, null, auths);
+Authentication authentication  = new UsernamePasswordAuthenticationToken(email, null, auths);
 
                 // Set the Authentication object in the SecurityContext to make the user authenticated
                 SecurityContextHolder.getContext().setAuthentication(authentication);
